@@ -54,7 +54,7 @@ val hadoopVersionForHive2 = "2.7.2"
 val hive2Version = "2.3.3"
 val tezVersionForHive2 = "0.8.4"
 
-def scalacWarningUnusedImport(version: String) = version match {
+def scalacWarningUnusedImport(version: String): String = version match {
     case v if v.startsWith("2.13.") => "-Ywarn-unused:imports"
     case _ => "-Ywarn-unused-import"
 }
@@ -424,7 +424,7 @@ lazy val testParquetUtilsWithStandaloneCosmetic = project.dependsOn(standaloneCo
     )
   )
 
-def scalaCollectionPar(version: String) = version match {
+def scalaCollectionPar(version: String): Seq[ModuleID] = version match {
   case v if v.startsWith("2.13.") =>
     Seq("org.scala-lang.modules" %% "scala-parallel-collections" % "1.0.4")
     case _ => Seq()
@@ -469,7 +469,7 @@ lazy val standalone = (project in file("standalone"))
     // `standaloneCosmetic` and update it accordingly.
     libraryDependencies ++= scalaCollectionPar(scalaVersion.value) ++ Seq(
       "org.apache.hadoop" % "hadoop-client" % hadoopVersion % "provided",
-      "com.github.mjakubowski84" %% "parquet4s-core" % parquet4sVersion excludeAll (
+      "com.github.iotier" %% "parquet4s-core" % "sara/add-logging" excludeAll (
         ExclusionRule("org.slf4j", "slf4j-api")
       ),
       "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.12.3",
@@ -722,7 +722,7 @@ lazy val flink = (project in file("flink"))
         <developers>
           <developer>
             <id>pkubit-g</id>
-            <name>Paweł Kubit</name>
+            <name>Pawel Kubit</name>
             <url>https://github.com/pkubit-g</url>
           </developer>
           <developer>
